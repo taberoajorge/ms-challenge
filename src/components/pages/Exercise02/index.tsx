@@ -2,40 +2,40 @@
 
 import './assets/styles.css'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
-
-const URL = 'https://yts.lt/api/v2/list_movies.json'
+import { useMovies } from './hooks/useMovies'
 
 export const Exercise02 = () => {
-  const [movies, setMovies] = useState([])
-  const [fetchCount, setFetchCount] = useState(0)
-  const [loading, setLoading] = useState(false)
+  const [genre, setGenre] = useState('Comedy')
+  const { movies, loading, handleMovieFetchData, orderDescending, data, fetchCount } = useMovies([], genre)
 
-  const handleMovieFetch = async () => {
-    setLoading(true)
-    const response = await axios.get(URL, {
-      params: {
-        limit: 50,
-        page: fetchCount + 1,
-        },
-        })
-    setMovies([...movies, ...response.data.data.movies])
-    setFetchCount(fetchCount + 1)
-    setLoading(false)
-  }
-  
   useEffect(() => {
-    handleMovieFetch()
-  }, [])
+    handleMovieFetchData(genre)
+  }, [genre])
 
   return (
     <section className="movie-library">
       <h1 className="movie-library__title">Movie Library</h1>
       <div className="movie-library__actions">
-        <select name="genre" placeholder="Search by genre...">
-          <option value="genre1">Genre 1</option>
+        <select
+          name="genre"
+          placeholder="Search by genre..."
+          onChange={e => {
+            setGenre(e.target.value)
+          }}
+        >
+          {data.genres.map(genre => (
+            <option key={genre} value={genre}>
+              {genre}
+            </option>
+          ))}
         </select>
-        <button>Order Descending</button>
+        <button
+          onClick={() => {
+            orderDescending()
+          }}
+        >
+          Order Descending
+        </button>
       </div>
       {loading ? (
         <div className="movie-library__loading">
