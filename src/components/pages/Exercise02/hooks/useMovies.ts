@@ -13,7 +13,8 @@ export const useMovies = (itemName, initialValue) => {
     setLoading(false)
     setFetchCount(fetchCount + 1)
   }
-  const orderDescending = () => setMovies(movies.sort((a, b) => parseInt(b.year) - parseInt(a.year)))
+  const orderDescending = () =>
+    setMovies(movies.sort((a, b) => parseInt(b.year) - parseInt(a.year)))
 
   return {
     movies,
@@ -21,6 +22,6 @@ export const useMovies = (itemName, initialValue) => {
     orderDescending,
     loading,
     data,
-    fetchCount
+    fetchCount,
   }
 }

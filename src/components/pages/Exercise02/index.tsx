@@ -6,7 +6,14 @@ import { useMovies } from './hooks/useMovies'
 
 export const Exercise02 = () => {
   const [genre, setGenre] = useState('Comedy')
-  const { movies, loading, handleMovieFetchData, orderDescending, data, fetchCount } = useMovies([], genre)
+  const {
+    movies,
+    loading,
+    handleMovieFetchData,
+    orderDescending,
+    data,
+    fetchCount,
+  } = useMovies([], genre)
 
   useEffect(() => {
     handleMovieFetchData(genre)
